@@ -2,7 +2,7 @@
 
 """
 The code performs basic statistics on the data obtained from performBRIFSverification.py main().
-External rerequisites:
+External prerequisites:
 --pandas, numpy
 
 Author: Matjaz Licer, NIB MBS @socib
