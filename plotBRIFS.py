@@ -96,7 +96,7 @@ def naninterp(y):
 	y[nans]= np.interp(x(nans), x(~nans), y[~nans])
 	return y,nans
 
-def plotBRIFS(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats):
+def plotBRIFS(plotdir,strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats):
 # plotting main subroutine:
 
 	rcParams['font.family'] = 'serif'
@@ -172,7 +172,7 @@ def plotBRIFS(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats):
 				newax = fig.add_axes(socibLogoLocationSize, anchor='NE',zorder=10)
 				newax.imshow(im)
 				newax.axis('off')
-				pngname = 'SLEV_'+stations[k].location+'_'+sensorType[k]+'_'+strdate+'.png'
+				pngname = plotdir+'SLEV_'+stations[k].location+'_'+sensorType[k]+'_'+strdate+'.png'
 				pngname = pngname.replace('__','_')
 				fig.savefig(pngname, bbox_inches='tight')
 				plt.close()
@@ -217,7 +217,7 @@ def plotBRIFS(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats):
 			newax = fig.add_axes(socibLogoLocationSize, anchor='NE',zorder=10)
 			newax.imshow(im)
 			newax.axis('off')
-			pngname = 'AIR_PRE_'+stations[k].location+'_'+sensorType[k]+'_'+strdate+'.png'
+			pngname = plotdir+'AIR_PRE_'+stations[k].location+'_'+sensorType[k]+'_'+strdate+'.png'
 			pngname = pngname.replace('__','_')
 			fig.savefig(pngname, bbox_inches='tight')
 			plt.close()
@@ -273,7 +273,7 @@ def plotBRIFS(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats):
 				newax = fig.add_axes(socibLogoLocationSize, anchor='NE',zorder=10)
 				newax.imshow(im)
 				newax.axis('off')
-				pngname = 'SLEV_'+stations[k].location+'_'+sensorType[k]+'_'+strdate+'.png'
+				pngname = plotdir+'SLEV_'+stations[k].location+'_'+sensorType[k]+'_'+strdate+'.png'
 				pngname = pngname.replace('__','_')
 				fig.savefig(pngname, bbox_inches='tight')
 				plt.close()

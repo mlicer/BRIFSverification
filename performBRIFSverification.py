@@ -57,6 +57,10 @@ def main():
 	# wrfdir = '/home/mlicer/'
 	romsdir = '/home/rissaga/new_setup/Archive/Outputs/ROMS/'
 
+	plotdir = '/home/mlicer/BRIFSverif/pyVerif/'+strdate+'/'
+
+	os.system('mkdir -p '+plotdir)
+
 	# determine timeWindow [hours] for comparisons:
 	timeWindow=48
 
@@ -126,7 +130,7 @@ def main():
 	stats = basicStatistics(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms)
 
 	# plot graphs:
-	plotBRIFS(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats)
+	plotBRIFS(plotdir,strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms,stats)
 
 
 if __name__ == '__main__':

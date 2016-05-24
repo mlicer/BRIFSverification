@@ -12,22 +12,9 @@ matjaz.licer@mbss.org
 import os,sys,re,requests,json, math,pickle
 from sys import exit as q
 from datetime import datetime,timedelta
-# from matplotlib.cbook import get_sample_data
-# import matplotlib.pyplot as plt
-# import matplotlib.colors as col
-# import matplotlib.cm as cm
-# import matplotlib.pyplot as plt
-# import matplotlib.colors as col
-# from matplotlib.ticker import FuncFormatter
-# import matplotlib.cm as cm
-# from matplotlib.dates import YearLocator, MonthLocator, DateFormatter
 import numpy as np
 import pandas as pd
-# from sys import exit as q
-# from scipy.signal import butter, lfilter,firwin
-# from scipy.signal import ellip,filtfilt
-# from matplotlib import rc,rcParams
-# from scipy.interpolate import interp1d
+
 
 # define class which contains fields (attributes) from fields array:
 class statisticalScores(object):
