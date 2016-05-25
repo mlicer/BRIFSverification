@@ -44,7 +44,7 @@ def printHelp():
 
 def main():
 
-	# check for input date YYYYMMDD:
+	# check for input date YYYYMMDD from console:
 	try:
 		strdate=sys.argv[1]
 	except:
@@ -64,7 +64,7 @@ def main():
 	# determine timeWindow [hours] for comparisons:
 	timeWindow=48
 
-	# read start date from console:
+	# parse start date:
 	startdatenum = datetime.strptime(strdate,'%Y%m%d')
 	enddatenum = startdatenum+timedelta(hours=timeWindow)
 
