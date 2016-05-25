@@ -4,7 +4,7 @@ The code performs BRIFS verification against available in situ data. Available
 data is determined by the DataDiscovery utility.
 External rerequisites:
 --HDF5 and netCDF C libraries, built with shared and OpenDAP support.
---numpy, scipy, matplotlib, netCDF4 for Python2.7
+--numpy, scipy, matplotlib, netCDF4, pandas for Python2.7
 
 INPUT: YYYYMMDD string of the date of verification, for example:
 
