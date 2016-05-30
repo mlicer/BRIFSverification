@@ -44,7 +44,7 @@ def findStationIndexInGrid(stationLon,stationLat,longrid2d,latgrid2d):
 
 # define class which contains fields (attributes) from fields array:
 class modelData(object):
-	def __init__(self,stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir):
+	def __init__(self,stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir, operMode):
 		self.stations = stations
 		self.startdatenum = startdatenum
 		self.wrfFields = wrfFields
@@ -59,8 +59,13 @@ class modelData(object):
 		self.romsdatestring = datetime.strftime(self.startdatenum,'%Y%m%d')
 
 		self.wrf_file = self.wrfdir+'wrfout_d02_'+self.wrfdatestring
-		self.roms_parent_file = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_his.nc'
-		self.roms_child_file = self.romsdir+'roms_BRIFS_child_'+self.romsdatestring+'_his.nc'
+
+		if operMode=='oper':
+			self.roms_parent_file = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_op_his.nc'
+			self.roms_child_file = self.romsdir+'roms_BRIFS_child_'+self.romsdatestring+'_op_his.nc'
+		else:
+			self.roms_parent_file = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_hind_his.nc'
+			self.roms_child_file = self.romsdir+'roms_BRIFS_child_'+self.romsdatestring+'_hind_his.nc'
 
 	def readWRF(self):
 		# WRF reader

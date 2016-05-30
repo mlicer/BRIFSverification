@@ -36,9 +36,11 @@ def removeFile(filename):
 
 def printHelp():
 	print("\n")
-	print("Check input arguments! Date string YYYYMMDD expected!")
+	print("Check input arguments! Date string YYYYMMDD and oper/hind mode expected!")
 	print("Example:")
-	print("./performBRIFSverification.py "+datetime.now().strftime("%Y%m%d"))
+	print("./performBRIFSverification.py "+datetime.now().strftime("%Y%m%d")+" oper")
+	print("\nor\n./performBRIFSverification.py "+datetime.now().strftime("%Y%m%d")+" hind")
+
 	print("\n")
 	sys.exit()
 
@@ -47,13 +49,18 @@ def main():
 	# check for input date YYYYMMDD from console:
 	try:
 		strdate=sys.argv[1]
+		operMode = sys.argv[2]
 	except:
 		printHelp()
 
 	# set OPERATIONAL wrf and roms netCDF output directories:
-	wrfdir = '/home/rissaga/new_setup/Archive/Outputs/WRF/'+strdate+'_op/'
+
+	if operMode=='oper':
+		wrfdir = '/home/rissaga/new_setup/Archive/Outputs/WRF/'+strdate+'_op/'
 	# set HINDCAST wrf and roms netCDF output directories:
-	wrfdir_hind = '/home/rissaga/new_setup/Archive/Outputs/WRF/'+strdate+'_hind/'
+	else:
+		wrfdir = '/home/rissaga/new_setup/Archive/Outputs/WRF/'+strdate+'_hind/'
+
 	# wrfdir = '/home/mlicer/'
 	romsdir = '/home/rissaga/new_setup/Archive/Outputs/ROMS/'
 
@@ -115,16 +122,16 @@ def main():
 	stations,sensorType = obsData(fileList,sensorType,observationFields).read()
 
 	# extract WRF for available grid points:
-	wrf_yesterday = modelData(stations,yesterday,wrfFields,romsFields,wrfdir,romsdir).readWRF()
-	wrf_today = modelData(stations,today,wrfFields,romsFields,wrfdir,romsdir).readWRF()
-	wrf_tomorrow = modelData(stations,tomorrow,wrfFields,romsFields,wrfdir,romsdir).readWRF()
+	wrf_yesterday = modelData(stations,yesterday,wrfFields,romsFields,wrfdir,romsdir, operMode).readWRF()
+	wrf_today = modelData(stations,today,wrfFields,romsFields,wrfdir,romsdir, operMode).readWRF()
+	wrf_tomorrow = modelData(stations,tomorrow,wrfFields,romsFields,wrfdir,romsdir, operMode).readWRF()
 
 	# merge WRF times and air pressures from all three days for all stations:
 	wrf_t_3days,wrf_p_3days = mergeWRF(stations,wrf_yesterday,wrf_today,wrf_tomorrow,'pointMSLP')
 	# wrf_t_3days,wrf_p_3days = mergeWRF(stations,wrf_yesterday,wrf_today,wrf_tomorrow,'pointPSFC')
 
 	# extract ROMS
-	roms = modelData(stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir).readROMS()
+	roms = modelData(stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir, operMode).readROMS()
 
 	# compute basic statistics (BIAS, RMSE, CORR):
 	stats = basicStatistics(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms)
