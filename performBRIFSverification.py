@@ -6,9 +6,10 @@ External rerequisites:
 --HDF5 and netCDF C libraries, built with shared and OpenDAP support.
 --numpy, scipy, matplotlib, netCDF4, pandas for Python2.7
 
-INPUT: YYYYMMDD string of the date of verification, for example:
+INPUT: YYYYMMDD string of the date of verification and oper/hind mode, for example:
 
-./performBRIFSverification.py 20160331
+./performBRIFSverification.py 20160331 oper
+./performBRIFSverification.py 20160331 hind
 
 
 Author: Matjaz Licer, NIB MBS @socib
