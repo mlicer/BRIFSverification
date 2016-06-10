@@ -4,7 +4,7 @@ Author: Matjaz Licer, matjaz.licer@mbss.org
 
 This is documentation for BRIFS system verification Python tools, running at SOCIB SCBD067 computer at IMEDEA, Mallorca. These tools allow us to operationaly (daily) compare BRIFS system outputs with all available in situ data from SOCIB observational network and plot high-quality images of comparisons.
 
-External rerequisites:
+External prerequisites:
 
 --HDF5 and netCDF C libraries, built with shared and OpenDAP support.
 
