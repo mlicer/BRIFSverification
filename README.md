@@ -17,3 +17,5 @@ INPUT: YYYYMMDD string of the date of verification and oper/hind mode, for examp
 
 ./performBRIFSverification.py 20160331 hind
 
+See BRIFSverificationCodes.pdf for further information. 
+
