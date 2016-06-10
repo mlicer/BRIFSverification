@@ -65,7 +65,7 @@ def main():
 	# wrfdir = '/home/mlicer/'
 	romsdir = '/home/rissaga/new_setup/Archive/Outputs/ROMS/'
 
-	plotdir = '/home/mlicer/BRIFSverif/pyVerif/'+strdate+'/'
+	plotdir = '/home/mlicer/BRIFSverif/pyVerif/'+strdate+'_'+operMode+'/'
 
 	os.system('mkdir -p '+plotdir)
 
@@ -132,7 +132,7 @@ def main():
 	# wrf_t_3days,wrf_p_3days = mergeWRF(stations,wrf_yesterday,wrf_today,wrf_tomorrow,'pointPSFC')
 
 	# extract ROMS
-	roms = modelData(stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir, operMode).readROMS()
+	roms = modelData(stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir, operMode).readROMS(startdatenum,operMode)
 
 	# compute basic statistics (BIAS, RMSE, CORR):
 	stats = basicStatistics(strdate,sensorType,stations,wrf_t_3days,wrf_p_3days,roms)

@@ -42,6 +42,38 @@ def findStationIndexInGrid(stationLon,stationLat,longrid2d,latgrid2d):
 	a = abs(longrid2d-stationLon)+abs(latgrid2d-stationLat)
 	return np.argmin(a,0)[0],np.argmin(a,1)[0]
 
+def getROMSfilenames(self,startdatenum,operMode):
+	if operMode=='oper':
+		self.roms_parent_file = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_his.nc'
+
+		romsfile = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_his.nc'
+		romsfileop = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_op_his.nc'
+
+		if os.path.isfile(romsfile):
+			self.roms_parent_file = romsfile
+		elif os.path.isfile(romsfileop):
+			self.roms_parent_file = romsfileop
+		else:
+			print "******modelData: getROMSfilenames ERROR: NEITHER FILE EXISTS:"
+			print romsfile
+			print romsfileop
+			print "1. CHECK FILENAME \nOR \n2. MODIFY self.roms_parent_file VARIABLE IN modelData.py!"
+			q()
+
+	else:
+		romsfile = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_hind_his.nc'
+		if os.path.isfile(romsfile):
+			self.roms_parent_file = romsfile
+		else:
+			print "******modelData: getROMSfilenames ERROR: THE FILE DOES NOT EXIST:"
+			print romsfile
+			print "1. CHECK FILENAME \nOR \n2. MODIFY self.roms_parent_file VARIABLE IN modelData.py!"
+			q()
+
+	self.roms_child_file = self.roms_parent_file.replace('parent','child')
+
+	return 	self.roms_parent_file, self.roms_child_file
+
 # define class which contains fields (attributes) from fields array:
 class modelData(object):
 	def __init__(self,stations,startdatenum,wrfFields,romsFields,wrfdir,romsdir, operMode):
@@ -59,13 +91,6 @@ class modelData(object):
 		self.romsdatestring = datetime.strftime(self.startdatenum,'%Y%m%d')
 
 		self.wrf_file = self.wrfdir+'wrfout_d02_'+self.wrfdatestring
-
-		if operMode=='oper':
-			self.roms_parent_file = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_op_his.nc'
-			self.roms_child_file = self.romsdir+'roms_BRIFS_child_'+self.romsdatestring+'_op_his.nc'
-		else:
-			self.roms_parent_file = self.romsdir+'roms_BRIFS_parent_'+self.romsdatestring+'_hind_his.nc'
-			self.roms_child_file = self.romsdir+'roms_BRIFS_child_'+self.romsdatestring+'_hind_his.nc'
 
 	def readWRF(self):
 		# WRF reader
@@ -126,16 +151,20 @@ class modelData(object):
 
 		return self.WRFall
 
-	def readROMS(self):
-
-		### ROMS----------------
-		# open netCDF:
-		f_parent = Dataset(self.roms_parent_file)
-		f_child = Dataset(self.roms_child_file)
+	def readROMS(self,startdatenum,operMode):
 
 		# read grid:
 		print ""
 		print "Reading ROMS parent..."
+
+		# get ROMS filenames and check if they exist:
+		self.roms_parent_file,self.roms_child_file = getROMSfilenames(self,startdatenum,operMode)
+
+		# open netCDF:
+		f_parent = Dataset(self.roms_parent_file)
+		f_child = Dataset(self.roms_child_file)
+
+
 
 		roms_parent_lon = f_parent.variables['lon_rho'][:]
 		roms_parent_lat = f_parent.variables['lat_rho'][:]
